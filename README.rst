@@ -1,42 +1,45 @@
-<title>
-.......
+Pin testing
+...........
 
-:Stable release:  eg 0v5, 1v0, unreleased
+:Stable release:  unreleased
 
-:Status:  eg, Feature complete, draft, idea, alpha
+:Status:  alpha
 
-:Maintainer:  <name>
+:Maintainer:  https://github.com/henkmuller
+
+:Description:  Testing of pin connectivity
 
 
-<One or more sentences explaining the purpose of the repo>
+This repo contains an application to test the connectivity of a device by driving values on it and checling the response. By measuring capacitance, it also measures how long the PCB traces are and it may be possible to detect dry joints.
 
 Key Features
 ============
 
-   * <Bullet pointed list of features>
+* Creates a file with expected values, measuring a number of "good" boards
+* Compares boards with the known good boards.
 
 To Do
 =====
 
-   * <Bullet pointed list of missing features>
+* Build in the possibility to disable pins from being tested (those pins that drive actuators)
+* Test for shorts between pins.
 
 Firmware Overview
 =================
 
-<One or more paragraphs detailing the functionality of modules and apps in this repo>
+One module in the app implements the measurements and storage. It uses the same principle as the capacitive sensing module, but it works on a lower level to detect stuck at ones and stuck at zeroes.
 
 Known Issues
 ============
 
-   * <Bullet pointed list of problems>
+* None
 
 Required Repositories
 ================
 
-   * <list of repos, likely to include xcommon if it uses the build system>
-   * xcommon git\@github.com:xcore/xcommon.git
+* xcommon git\@github.com:xcore/xcommon.git
 
 Support
 =======
 
-<Description of support model>
+Feel free to suggest patches.
