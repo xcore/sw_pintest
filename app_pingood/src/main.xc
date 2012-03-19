@@ -8,7 +8,8 @@
 #include <platform.h>
 #include <xs1.h>
 
-#define ANALYSE_L2  1
+/* this is defined by the build target in the Makefile */
+//#define ANALYSE_L2  1
 
 /* declaire ports and set initial state */
 on stdcore[0]: clock k0 = XS1_CLKBLK_1;
