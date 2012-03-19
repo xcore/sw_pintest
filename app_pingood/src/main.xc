@@ -65,7 +65,7 @@ int runtest( int coreId, pinDescriptors ports[], clock k, chanend c, int start, 
     
     printf("Analysing pins for core %d\n", coreId);
     analysePins(ports, k);
-    appendfile();
+    appendfile(coreId);
     for(i = 0; i < NPINS; i++) {
         for(j = 0; j < ports[i].width; j++) {
             outputfile(ports[i].state[j]);

@@ -30,9 +30,9 @@ typedef struct s_pinDescriptors {
 
 void analysePins( pinDescriptors ports[], clock k );
 
-int openfile(void);
+int openfile( int coreId );
 int inputfile(void);
 void outputfile(int i);
 void outputfileln(void);
 void closefile(void);
-int appendfile(void);
+int appendfile( int coreId );
