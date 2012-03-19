@@ -9,28 +9,6 @@
 #include "pin_analyser.h"
 #include "sortme.h"
 
-clock k = XS1_CLKBLK_1;
-
-struct  pinDescriptors ports[NPINS] = {
-    { XS1_PORT_1A, 1, "PORT_1A", 0, {0}, {UNKNOWN} },
-    { XS1_PORT_1B, 1, "PORT_1B", 1, {0}, {UNKNOWN} },
-    { XS1_PORT_8A, 8, "PORT_8A", 2, {0}, {UNKNOWN} },
-    { XS1_PORT_1C, 1, "PORT_1C", 10, {0}, {UNKNOWN} },
-    { XS1_PORT_1D, 1, "PORT_1D", 11, {0}, {UNKNOWN} },
-    { XS1_PORT_1E, 1, "PORT_1E", 12, {0}, {UNKNOWN} },
-    { XS1_PORT_1F, 1, "PORT_1F", 13, {0}, {UNKNOWN} },
-    { XS1_PORT_8B, 8, "PORT_8B", 14, {0}, {UNKNOWN} },
-    { XS1_PORT_1G, 1, "PORT_1G", 22, {0}, {UNKNOWN} },
-    { XS1_PORT_1H, 1, "PORT_1H", 23, {0}, {UNKNOWN} },
-    { XS1_PORT_1I, 1, "PORT_1I", 24, {0}, {UNKNOWN} },
-    { XS1_PORT_1J, 1, "PORT_1J", 25, {0}, {UNKNOWN} },
-    { XS1_PORT_8C, 8, "PORT_8C", 26, {0}, {UNKNOWN} },
-    { XS1_PORT_1K, 1, "PORT_1K", 34, {0}, {UNKNOWN} },
-    { XS1_PORT_1L, 1, "PORT_1L", 35, {0}, {UNKNOWN} },
-    { XS1_PORT_8D, 8, "PORT_8D", 36, {0}, {UNKNOWN} },
-    { XS1_PORT_32A, 20, "PORT_32A", 49, {0}, {UNKNOWN} },
-};
-
 #define N 800
 
 void setupNbit(port cap, clock k) {
@@ -94,7 +72,7 @@ void measureAverage(port cap, unsigned int avg[20], int pullDown, int activate, 
     }
 }
 
-void measureAll(int pullDown, int activate) {
+void measureAll(int pullDown, int activate, pinDescriptors ports[], clock k) {
     for(int i = 0; i < NPINS; i++) {
         unsigned int times[20];
         setupNbit(ports[i].p, k);
@@ -105,7 +83,7 @@ void measureAll(int pullDown, int activate) {
     }
 }
 
-void analysePins(void) {
+void analysePins( pinDescriptors ports[], clock k ) {
     unsigned int median;
 //    unsigned int times[20];
   //  setupNbit(ports[16].p, k);
@@ -113,7 +91,7 @@ void analysePins(void) {
     unsigned int floats[64];
     int fltCnt = 0;
 
-    measureAll(0, 0);
+    measureAll(0, 0, ports, k);
     for(int i = 0; i < NPINS; i++) {
         for(int j = 0; j < ports[i].width; j++) {
             if (ports[i].state[j] == UNKNOWN && ports[i].timing[j] < 0xffff) {
@@ -121,7 +99,7 @@ void analysePins(void) {
             }
         }
     }
-    measureAll(1, 0);
+    measureAll(1, 0, ports, k);
     for(int i = 0; i < NPINS; i++) {
         for(int j = 0; j < ports[i].width; j++) {
             if (ports[i].state[j] == UNKNOWN && ports[i].timing[j] < 0xffff) {
@@ -129,7 +107,7 @@ void analysePins(void) {
             }
         }
     }
-    measureAll(1, 1);
+    measureAll(1, 1, ports, k);
     for(int i = 0; i < NPINS; i++) {
         for(int j = 0; j < ports[i].width; j++) {
             if (ports[i].state[j] == UNKNOWN) {

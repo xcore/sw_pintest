@@ -7,8 +7,11 @@
 
 FILE *fd = NULL;
 
-int openfile(void) {
-    fd = fopen("measurements.txt", "r");
+int openfile(int coreId) {
+    char filename[23];
+    sprintf((char *)&filename, "measurements_core%d.txt", coreId);
+    printf("Opening \"%s\"\n", filename);
+    fd = fopen( filename, "r");
     return fd != NULL;
 }
 
@@ -33,7 +36,10 @@ void closefile(void) {
     if (fd != NULL) fclose(fd);
 }
 
-int appendfile(void) {
-    fd = fopen("measurements.txt", "a");
+int appendfile(int coreId) {
+    char filename[23];
+    sprintf((char *)&filename, "measurements_core%d.txt", coreId);
+    printf("Appending to \"%s\"\n", filename);
+    fd = fopen(filename, "a");
     return fd != NULL;
 }
