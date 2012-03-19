@@ -3,6 +3,8 @@
 // University of Illinois/NCSA Open Source License posted in
 // LICENSE.txt and at <http://github.xcore.com/>
 
+#include <xs1.h>
+
 #define NPINS 17
 
 enum { UNKNOWN=0, PULLEDHIGH=1, PULLEDLOW=2, FLOATER=3 };
@@ -13,7 +15,7 @@ struct average {
     unsigned int x2;
 };
 
-struct pinDescriptors {
+typedef struct s_pinDescriptors {
     port p;
     int width;
     char name[9];
@@ -24,13 +26,9 @@ struct pinDescriptors {
     unsigned short expectedTiming[20];
     unsigned short deviation[20];
     unsigned char expectedState[20];
-};
+} pinDescriptors;
 
-extern struct  pinDescriptors ports[NPINS];
-
-extern void analysePins(void);
-
-
+void analysePins( pinDescriptors ports[], clock k );
 
 int openfile(void);
 int inputfile(void);
