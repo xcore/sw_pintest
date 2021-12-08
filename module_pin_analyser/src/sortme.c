@@ -5,6 +5,7 @@
 
 #include <stdlib.h>
 
+__attribute__((fptrgroup("stdlib_qsort"))) // <-- Fails at runtime without this line
 static int compar(const void *a, const void *b) {
     return *(unsigned int*)a - *(unsigned int*)b;
 }
